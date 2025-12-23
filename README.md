@@ -6,8 +6,7 @@ The Billionaire Operating System (BOS Lite) — A Practical Guide for a Reality-
 
 > **Observe reality. Don’t negotiate with belief.**
 
-**BOS Lite** (The **Billionaire Operating System — Lite**) is a **public, educational framework** designed to test claims against reality  
-**without relying on belief, motivation, authority, or reassurance**.
+**BOS Lite** (The **Billionaire Operating System — Lite**) is a **public, educational framework** designed to test claims against reality **without relying on belief, motivation, authority, or reassurance**.
 
 It is deliberately narrow.  
 It is deliberately disciplined.  
@@ -57,8 +56,7 @@ It does **not** work for:
 - 🎨 Early-stage creative ideation  
 
 > **Rule of thumb:**  
-> If a situation requires *comfort, belief, identity, or faith without feedback* —  
-> **do not use BOS Lite.**
+> If a situation requires *comfort, belief, identity, or faith without feedback* — **do not use BOS Lite.**
 
 ---
 
@@ -102,9 +100,7 @@ You are responsible for how you interpret or apply it.
 **Actively maintained.**  
 Updates are intentional, minimal, and versioned.
 
-This project values **clarity over expansion**  
-and **precision over popularity**.
-
+This project values **clarity over expansion** and **precision over popularity**.
 ---
 
 🧭 *BOS Lite exists to reduce confident self-deception — not to replace judgment.*
