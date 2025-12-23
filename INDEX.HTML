@@ -1,1 +1,968 @@
-INDEX.HTML
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="BOS Lite — a reality-anchored decision & action framework. Observe what works. Test claims against reality." />
+  <title>BOS Lite — Reality-Anchored Decision Framework</title>
+
+  <!-- Fonts (safe defaults + optional modern) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       BOS Lite — Home (index.html)
+       Palette blend:
+       Light: #F4F6F8 bg, #243447 text, #4A6FA5 accent, #D6DEE8 divider
+       Dark:  #0B0E14 bg, #E6E8EB text, #7AA2F7 accent
+       ========================================================= */
+
+    :root {
+      /* Light mode */
+      --bg: #F4F6F8;
+      --panel: rgba(255,255,255,0.72);
+      --panel-solid: #FFFFFF;
+      --text: #243447;
+      --muted: rgba(36,52,71,0.72);
+      --muted2: rgba(36,52,71,0.58);
+      --accent: #4A6FA5;
+      --accent-2: rgba(74,111,165,0.12);
+      --divider: #D6DEE8;
+      --shadow: 0 16px 44px rgba(36,52,71,0.10);
+      --shadow2: 0 10px 26px rgba(36,52,71,0.10);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+
+      --serif: "Libre Baskerville", ui-serif, Georgia, serif;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    html[data-theme="dark"] {
+      /* Dark cognitive mode */
+      --bg: #0B0E14;
+      --panel: rgba(26,31,43,0.66);
+      --panel-solid: rgba(26,31,43,0.96);
+      --text: #E6E8EB;
+      --muted: rgba(230,232,235,0.74);
+      --muted2: rgba(230,232,235,0.58);
+      --accent: #7AA2F7;
+      --accent-2: rgba(122,162,247,0.14);
+      --divider: rgba(230,232,235,0.12);
+      --shadow: 0 18px 54px rgba(0,0,0,0.48);
+      --shadow2: 0 12px 30px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--sans);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Subtle background texture / cognitive gradient */
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(900px 500px at 12% 6%, var(--accent-2), transparent 60%),
+        radial-gradient(700px 420px at 88% 18%, var(--accent-2), transparent 60%),
+        radial-gradient(900px 520px at 60% 95%, var(--accent-2), transparent 62%);
+      filter: saturate(108%);
+    }
+    html[data-theme="dark"] .bg {
+      background:
+        radial-gradient(900px 520px at 12% 6%, rgba(122,162,247,0.14), transparent 60%),
+        radial-gradient(760px 440px at 88% 18%, rgba(122,162,247,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(26,31,43,0.60), rgba(11,14,20,0.94));
+    }
+
+    /* Fine grid overlay (very subtle) */
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(214,222,232,0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(214,222,232,0.18) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.22;
+      mix-blend-mode: multiply;
+    }
+    html[data-theme="dark"] .grid {
+      background-image:
+        linear-gradient(to right, rgba(230,232,235,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(230,232,235,0.06) 1px, transparent 1px);
+      opacity: 0.28;
+      mix-blend-mode: normal;
+    }
+
+    /* Layout */
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    .section { padding: 56px 0; }
+    .section.tight { padding: 36px 0; }
+
+    /* Top Nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--divider);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .brand-mark {
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
+      transform: translateY(-1px);
+    }
+    .brand-name {
+      font-family: var(--serif);
+      letter-spacing: -0.02em;
+      font-weight: 700;
+      font-size: 16.5px;
+    }
+    .brand-sub {
+      font-size: 12.5px;
+      color: var(--muted2);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 9px 10px;
+      border-radius: 10px;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+    .nav-links a:hover {
+      background: var(--accent-2);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn {
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 650;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 44%, var(--panel));
+    }
+    .btn.primary {
+      border-color: color-mix(in srgb, var(--accent) 60%, var(--divider));
+      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+    }
+    .icon-btn {
+      width: 42px; height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 14px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 76%, transparent);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+    .icon-btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 52%, var(--panel));
+    }
+
+    .hamburger {
+      display: none;
+    }
+
+    /* Mobile menu */
+    .mobile-panel {
+      display: none;
+      border-top: 1px solid var(--divider);
+      padding: 10px 0 14px;
+    }
+    .mobile-panel a {
+      display: block;
+      padding: 12px 10px;
+      margin: 4px 0;
+      border-radius: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 650;
+      background: transparent;
+      border: 1px solid transparent;
+    }
+    .mobile-panel a:hover {
+      border-color: var(--divider);
+      background: var(--accent-2);
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 54px 0 22px;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .hero-card {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(600px 360px at 20% 20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%),
+        radial-gradient(520px 340px at 90% 40%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 13px;
+    }
+    .k-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-family: var(--serif);
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      font-size: clamp(34px, 4vw, 54px);
+    }
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16.5px;
+      line-height: 1.6;
+      max-width: 62ch;
+    }
+
+    .cta-row {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .cta-row .btn {
+      padding: 11px 14px;
+      border-radius: 14px;
+    }
+    .mini-note {
+      color: var(--muted2);
+      font-size: 13px;
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .mini-note code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.5px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      color: var(--text);
+    }
+
+    /* Right-side hero panel */
+    .hero-side {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .stat {
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      border-radius: var(--radius-lg);
+      padding: 14px;
+    }
+    .stat .label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      font-weight: 750;
+    }
+    .stat .value {
+      margin-top: 8px;
+      font-family: var(--serif);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .pill {
+      border: 1px solid var(--divider);
+      background: transparent;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-weight: 650;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+
+    /* Section headings */
+    .h2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .h2 h2 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .h2 .sub {
+      color: var(--muted2);
+      font-size: 13.5px;
+    }
+
+    /* Cards */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      box-shadow: var(--shadow2);
+      transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--accent) 34%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 30%, var(--panel));
+    }
+    .card .top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+    .badge {
+      width: 34px; height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
+      font-size: 16px;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .card p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+    .card .link {
+      margin-top: 12px;
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13.5px;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+    }
+    .card .link:hover {
+      border-bottom-color: color-mix(in srgb, var(--accent) 50%, transparent);
+    }
+
+    /* Split panel */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .panel {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      box-shadow: var(--shadow2);
+    }
+    .panel h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+    .panel ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 13.5px;
+    }
+    .callout {
+      border-left: 4px solid var(--accent);
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent-2) 48%, var(--panel));
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* Collapsible prompt sample */
+    details {
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      border-radius: var(--radius-lg);
+      padding: 12px 12px;
+    }
+    details + details { margin-top: 10px; }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-weight: 750;
+      font-size: 13.5px;
+      color: var(--text);
+    }
+    summary::-webkit-details-marker { display: none; }
+    .chev {
+      width: 26px; height: 26px;
+      border-radius: 10px;
+      border: 1px solid var(--divider);
+      display: grid;
+      place-items: center;
+      background: transparent;
+      transition: transform 170ms ease, background 170ms ease;
+      color: var(--muted);
+      flex: 0 0 auto;
+    }
+    details[open] .chev {
+      transform: rotate(180deg);
+      background: var(--accent-2);
+      color: var(--text);
+    }
+    .prompt {
+      margin-top: 10px;
+      border-top: 1px solid var(--divider);
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+    .prompt pre {
+      margin: 10px 0 0;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 70%, transparent);
+      overflow: auto;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+    .copy-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .copy-row button {
+      padding: 9px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--divider);
+      background: transparent;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .copy-row button:hover { background: var(--accent-2); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--divider);
+      padding: 22px 0;
+      color: var(--muted2);
+      font-size: 13px;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted2);
+      text-decoration: none;
+      margin-right: 12px;
+      font-weight: 650;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+    .reveal.on {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .hamburger { display: inline-grid; }
+      .mobile-panel { display: none; }
+      .mobile-panel.open { display: block; }
+      .brand-sub { display: none; }
+      .hero-card { padding: 22px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="BOS Lite Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">BOS Lite</span>
+        <span class="brand-sub">Reality-Anchored Decision Framework</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="toc.html">Guide</a>
+        <a href="tool/bos-lite-runner.html">Tool</a>
+        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <!-- simple hamburger -->
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 5.5H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 10H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 14.5H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <a class="btn primary" href="start-here.html">Start Here →</a>
+
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+          <!-- moon/sun hybrid -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 13.2A8.2 8.2 0 1 1 10.8 3a6.6 6.6 0 0 0 10.2 10.2Z"
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="wrap">
+      <div class="mobile-panel" id="mobilePanel" aria-label="Mobile Navigation">
+        <a href="index.html">Home</a>
+        <a href="toc.html">Guide</a>
+        <a href="tool/bos-lite-runner.html">Tool</a>
+        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card reveal">
+          <span class="kicker"><span class="k-dot"></span> Public • Educational • Reference-Only</span>
+
+          <h1>BOS Lite is a calm way to test what’s real.</h1>
+
+          <p>
+            A reality-anchored decision &amp; action framework for people who don’t want motivation,
+            hype, or authority — they want <strong>feedback</strong>.
+            BOS Lite helps you observe whether something is actually working
+            <em>before</em> you build a life on it.
+          </p>
+
+          <div class="cta-row">
+            <a class="btn primary" href="toc.html">Read the 23-Part Guide</a>
+            <a class="btn" href="tool/10-minute-tests.html">Run a 10-Minute Test</a>
+            <a class="btn" href="tool/bos-lite-runner.html">Open the BOS Lite Runner</a>
+          </div>
+
+          <div class="mini-note">
+            <span>🧭 Default loop:</span>
+            <code>Claim → Disconfirm → Reality Contact</code>
+          </div>
+        </div>
+
+        <aside class="hero-side reveal" aria-label="Framework snapshot">
+          <div class="stat">
+            <div class="label">What it does</div>
+            <div class="value">Forces reality contact.</div>
+            <div class="pill-row">
+              <span class="pill">Less self-deception</span>
+              <span class="pill">Less waiting</span>
+              <span class="pill">More signal</span>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="label">What it is not</div>
+            <div class="value">Not therapy. Not advice.</div>
+            <div class="pill-row">
+              <span class="pill">No coaching</span>
+              <span class="pill">No comfort engine</span>
+              <span class="pill">No moral oracle</span>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="label">Mode toggle</div>
+            <div class="value">Light ↔ Dark Cognitive</div>
+            <div class="pill-row">
+              <span class="pill">Readable</span>
+              <span class="pill">Future-aware</span>
+              <span class="pill">Simple</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 3 ENTRY CARDS -->
+    <section class="section tight">
+      <div class="h2">
+        <h2>Choose your entry point</h2>
+        <div class="sub">Start reading, testing, or safeguarding.</div>
+      </div>
+
+      <div class="grid-3">
+        <article class="card reveal">
+          <div class="top">
+            <div class="badge" aria-hidden="true">📖</div>
+            <div>
+              <h3>The Guide</h3>
+              <p>23 parts. Clear sequencing. Built to be read like a magazine — calm, precise, usable.</p>
+            </div>
+          </div>
+          <a class="link" href="toc.html">Open Table of Contents →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="top">
+            <div class="badge" aria-hidden="true">⏱️</div>
+            <div>
+              <h3>10-Minute Tests</h3>
+              <p>Short experiments designed to produce signal fast — without turning your life into a theory.</p>
+            </div>
+          </div>
+          <a class="link" href="tool/10-minute-tests.html">Run a test scenario →</a>
+        </article>
+
+        <article class="card reveal">
+          <div class="top">
+            <div class="badge" aria-hidden="true">🧯</div>
+            <div>
+              <h3>Safeguards</h3>
+              <p>Where BOS Lite does not apply — and how to avoid using it as a comfort machine.</p>
+            </div>
+          </div>
+          <a class="link" href="safeguards/what-bos-does-not-work-for.html">Read the guardrails →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- WHAT / WHAT NOT SPLIT -->
+    <section class="section">
+      <div class="split">
+        <div class="panel reveal">
+          <h3>✅ What BOS Lite is</h3>
+          <ul>
+            <li>A constrained loop that reduces agreement-by-default thinking.</li>
+            <li>A way to surface external feedback, not internal stories.</li>
+            <li>A tool for deciding how long to continue something — based on signal.</li>
+            <li>Observation discipline: structured, calm, repeatable.</li>
+          </ul>
+          <div class="callout">
+            <strong>Core principle:</strong> If the world can’t push back, you can’t learn what’s true.
+          </div>
+        </div>
+
+        <div class="panel reveal">
+          <h3>🚫 What BOS Lite is not</h3>
+          <ul>
+            <li>Therapy, coaching, or emotional stabilization.</li>
+            <li>Moral or spiritual belief formation.</li>
+            <li>Identity answers (“Who am I?”).</li>
+            <li>Power-asymmetric situations where feedback is suppressed or punished.</li>
+            <li>Early-stage creativity where fragile ideas need incubation.</li>
+          </ul>
+          <div class="callout">
+            <strong>Rule of thumb:</strong> If you need comfort more than contact — don’t run BOS Lite.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE: Collapsible prompt sample -->
+    <section class="section">
+      <div class="h2">
+        <h2>Interactive by design</h2>
+        <div class="sub">Collapsible prompts (copy-ready) + guided loops.</div>
+      </div>
+
+      <div class="split">
+        <div class="panel reveal">
+          <h3>Sample: BOS Lite runner prompt</h3>
+
+          <details>
+            <summary>
+              Open the BOS Lite loop (copy/paste)
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="prompt">
+              Use this inside ChatGPT (or your notes). Keep it short. Observe only.
+              <pre id="promptText">BOS LITE — 10 MINUTE LOOP
+
+1) CLAIM (one sentence):
+[Write the claim you believe is true.]
+
+2) DISCONFIRM (1–3 signals):
+[What would show this might be wrong? What would you expect to see if it’s not working?]
+
+3) REALITY CONTACT (one small action):
+[One action that produces feedback within 10 minutes.]
+
+4) OUTCOME:
+[What happened? Response / rejection / silence / delay.]
+
+5) UPDATE:
+[What changed? What would you test next?]</pre>
+
+              <div class="copy-row">
+                <button type="button" id="copyBtn">Copy</button>
+              </div>
+            </div>
+          </details>
+
+          <details>
+            <summary>
+              NotebookLM explainer video outline (sample)
+              <span class="chev" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="prompt">
+              A short, disciplined format for a 3–5 minute explainer.
+              <pre>[HOOK] One sentence: “Most people confuse effort with effect…”
+[DEFINE] What BOS Lite is (not advice).
+[LANE] What it does NOT apply to.
+[EXAMPLE] One small 10-minute test.
+[CLOSE] “Reality is the teacher.”</pre>
+            </div>
+          </details>
+        </div>
+
+        <div class="panel reveal">
+          <h3>Next on this site</h3>
+          <ul>
+            <li><strong>Flipbook Guide:</strong> magazine-style chapter covers + summaries.</li>
+            <li><strong>Runner:</strong> guided inputs + timer + reflection.</li>
+            <li><strong>Safeguards:</strong> disclaimer, terms, data deletion, legal notice.</li>
+            <li><strong>Media Kit:</strong> image prompts + NotebookLM scripts.</li>
+          </ul>
+          <div class="callout">
+            Want the site to feel “futuristic but simple”? We’ll keep motion subtle:
+            reveal, slide, flip — no noisy animation.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="wrap footer-row">
+        <div>© <span id="year"></span> BOS Lite • Reference-Only</div>
+        <div class="footer-links">
+          <a href="safeguards/disclaimer.html">Disclaimer</a>
+          <a href="safeguards/terms-of-use.html">Terms</a>
+          <a href="safeguards/data-deletion.html">Data Deletion</a>
+          <a href="safeguards/legal-notice.html">Legal Notice</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    // =========================================================
+    // Minimal JS: theme toggle, mobile menu, copy button, reveals
+    // =========================================================
+    (function () {
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeBtn');
+      const menuBtn = document.getElementById('menuBtn');
+      const mobilePanel = document.getElementById('mobilePanel');
+      const copyBtn = document.getElementById('copyBtn');
+      const promptText = document.getElementById('promptText');
+      const year = document.getElementById('year');
+
+      year.textContent = new Date().getFullYear();
+
+      // Theme: load persisted preference, else system preference
+      const stored = localStorage.getItem('bos_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = stored || (prefersDark ? 'dark' : 'light');
+      setTheme(initial);
+
+      themeBtn?.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      function setTheme(mode) {
+        if (mode === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        localStorage.setItem('bos_theme', mode);
+      }
+
+      // Mobile menu
+      menuBtn?.addEventListener('click', () => {
+        const isOpen = mobilePanel.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      // Copy prompt
+      copyBtn?.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(promptText.innerText);
+          copyBtn.textContent = 'Copied ✓';
+          setTimeout(() => (copyBtn.textContent = 'Copy'), 1100);
+        } catch (e) {
+          copyBtn.textContent = 'Copy failed';
+          setTimeout(() => (copyBtn.textContent = 'Copy'), 1100);
+        }
+      });
+
+      // Reveal on view
+      const els = Array.from(document.querySelectorAll('.reveal'));
+      const io = new IntersectionObserver((entries) => {
+        for (const ent of entries) {
+          if (ent.isIntersecting) ent.target.classList.add('on');
+        }
+      }, { threshold: 0.12 });
+      els.forEach(el => io.observe(el));
+    })();
+  </script>
+</body>
+</html>
