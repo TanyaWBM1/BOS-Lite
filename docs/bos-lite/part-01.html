@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="BOS Lite — Table of Contents (22 Parts). A magazine-style index of chapters with core modules highlighted." />
-  <title>BOS Lite — Table of Contents</title>
+  <meta name="description" content="BOS Lite — Part 01: Why This Exists, and Why It’s Called BOS." />
+  <title>BOS Lite — Part 01</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,11 +12,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================================================
-       BOS Lite — TOC (toc.html)
-       Matches index.html + guide-cover.html palette + UI language
-       ========================================================= */
-
     :root {
       --bg: #F4F6F8;
       --panel: rgba(255,255,255,0.72);
@@ -94,7 +89,7 @@
 
     .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-    /* Nav (same language as other pages) */
+    /* Nav */
     .nav {
       position: sticky; top: 0; z-index: 50;
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
@@ -126,6 +121,7 @@
       transition: background 160ms ease, color 160ms ease, transform 160ms ease;
     }
     .nav-links a:hover { background: var(--accent-2); color: var(--text); transform: translateY(-1px); }
+    .nav-links a[aria-current="page"] { background: var(--accent-2); color: var(--text); }
 
     .nav-actions { display: flex; align-items: center; gap: 10px; }
     .btn {
@@ -168,7 +164,6 @@
       background: color-mix(in srgb, var(--accent-2) 52%, var(--panel));
     }
     .hamburger { display: none; }
-
     .mobile-panel {
       display: none;
       border-top: 1px solid var(--divider);
@@ -190,27 +185,41 @@
       color: var(--text);
     }
 
-    /* Page header */
-    main { padding: 28px 0 56px; }
-    .page-head {
+    /* Page layout */
+    main { padding: 24px 0 56px; }
+    .crumbs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      color: var(--muted2);
+      font-weight: 650;
+      font-size: 13px;
+      margin: 10px 0 14px;
+    }
+    .crumbs a { color: var(--muted2); text-decoration: none; }
+    .crumbs a:hover { color: var(--text); }
+
+    .hero {
       border: 1px solid var(--divider);
       background: var(--panel);
       border-radius: var(--radius-xl);
       box-shadow: var(--shadow);
       padding: 18px;
-      overflow: hidden;
       position: relative;
+      overflow: hidden;
     }
-    .page-head:before {
+    .hero:before {
       content: "";
       position: absolute;
       inset: -2px;
       background:
-        radial-gradient(650px 360px at 20% 20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
+        radial-gradient(650px 360px at 22% 20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
         radial-gradient(520px 320px at 92% 40%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 65%);
       z-index: -1;
       opacity: 0.9;
     }
+
     .kicker {
       display: inline-flex;
       align-items: center;
@@ -220,214 +229,286 @@
       border: 1px solid var(--divider);
       background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
       color: var(--muted);
-      font-weight: 750;
-      font-size: 13px;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
     .k-dot {
       width: 8px; height: 8px; border-radius: 999px;
       background: var(--accent);
       box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent);
     }
+
     h1 {
-      margin: 14px 0 8px;
+      margin: 14px 0 10px;
       font-family: var(--serif);
       letter-spacing: -0.03em;
-      font-size: clamp(26px, 3vw, 38px);
-      line-height: 1.12;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1.08;
     }
-    .lead {
+    .deck {
       margin: 0;
       color: var(--muted);
-      font-size: 15.5px;
+      font-size: 16px; /* requested body font size 16 */
       line-height: 1.65;
-      max-width: 86ch;
+      max-width: 90ch;
     }
 
-    /* Controls */
-    .controls {
+    .hero-actions {
       margin-top: 14px;
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
     }
-    .control-left {
+    .hero-actions .left {
       display: flex;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 10px;
       align-items: center;
     }
-    .search {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--divider);
-      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
-      border-radius: 14px;
-      padding: 10px 12px;
-      min-width: min(520px, 100%);
-    }
-    .search svg { color: var(--muted2); }
-    .search input {
-      border: none;
-      outline: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 13.5px;
-      width: 100%;
-      font-weight: 600;
-    }
-    .toggle {
-      user-select: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--divider);
-      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
-      cursor: pointer;
-      font-weight: 750;
-      font-size: 13px;
-      color: var(--text);
-    }
-    .toggle small { color: var(--muted2); font-weight: 650; }
-    .switch {
-      width: 42px; height: 24px;
-      border-radius: 999px;
-      border: 1px solid var(--divider);
-      background: transparent;
-      position: relative;
-      flex: 0 0 auto;
-    }
-    .switch::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 3px;
-      width: 18px; height: 18px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 20%, transparent);
-      transition: left 180ms ease;
-    }
-    .toggle[data-on="true"] .switch::after { left: 21px; }
-
-    /* Cards grid */
-    .toc {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .card {
-      border: 1px solid var(--divider);
-      background: var(--panel);
-      border-radius: var(--radius-xl);
-      padding: 16px;
-      box-shadow: var(--shadow2);
-      transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
-      position: relative;
-      overflow: hidden;
-      min-height: 168px;
-      display: grid;
-      gap: 12px;
-      align-content: start;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      border-color: color-mix(in srgb, var(--accent) 34%, var(--divider));
-      background: color-mix(in srgb, var(--accent-2) 30%, var(--panel));
-    }
-    .card:before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background:
-        radial-gradient(520px 280px at 18% 18%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%);
-      opacity: 0.75;
-      z-index: -1;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .part {
+    .pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      color: var(--muted2);
+      font-weight: 750;
+      font-size: 13px;
+    }
+
+    /* Magazine body */
+    .layout {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .article {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    /* Magazine typography */
+    .prose {
+      font-size: 16px; /* requested body font size 16 */
+      line-height: 1.85;
+      color: var(--text);
+    }
+    .prose p {
+      margin: 0 0 14px;
+    }
+    .prose p:first-of-type::first-letter {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 54px;
+      line-height: 0.95;
+      float: left;
+      padding-right: 10px;
+      padding-top: 6px;
+      color: var(--text);
+    }
+    .callout {
+      margin: 18px 0;
+      border-left: 4px solid color-mix(in srgb, var(--accent) 60%, var(--divider));
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent-2) 42%, var(--panel));
+      color: var(--text);
+      font-weight: 650;
+      line-height: 1.7;
+    }
+
+    /* Image placeholders */
+    .media-grid {
+      margin: 18px 0 6px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .ph {
+      border: 1px dashed color-mix(in srgb, var(--divider) 85%, transparent);
+      border-radius: var(--radius-xl);
+      background: color-mix(in srgb, var(--panel-solid) 65%, transparent);
+      overflow: hidden;
+      min-height: 220px;
+      position: relative;
+    }
+    html[data-theme="dark"] .ph {
+      background: color-mix(in srgb, var(--panel-solid) 18%, transparent);
+    }
+    .ph::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(480px 260px at 20% 25%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .ph .label {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
       font-weight: 800;
       font-size: 12px;
       letter-spacing: 0.10em;
       text-transform: uppercase;
       color: var(--muted2);
     }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
+    .ph .hint {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      right: 14px;
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* Video placeholder framed as a monitor */
+    .monitor {
+      margin: 16px 0 4px;
+      border-radius: var(--radius-xl);
+      background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
       border: 1px solid var(--divider);
-      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--text);
-      white-space: nowrap;
+      overflow: hidden;
+      box-shadow: var(--shadow2);
     }
-    .badge.core {
-      border-color: color-mix(in srgb, var(--accent) 55%, var(--divider));
-      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+    .monitor-top {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 78%, transparent);
     }
-
-    .title {
-      margin: 0;
-      font-size: 15px;
-      letter-spacing: -0.01em;
-      line-height: 1.28;
+    .dots { display: flex; gap: 8px; }
+    .dot {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: color-mix(in srgb, var(--muted2) 38%, transparent);
+      border: 1px solid color-mix(in srgb, var(--divider) 70%, transparent);
+    }
+    .monitor-title {
+      color: var(--muted2);
       font-weight: 750;
-      color: var(--text);
+      font-size: 12.5px;
+    }
+    .monitor-screen {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg,
+        color-mix(in srgb, var(--accent) 10%, transparent),
+        transparent 55%);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .play {
+      width: 72px; height: 72px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--divider));
+      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 16px 40px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+    .play svg { color: var(--text); }
+    .monitor-caption {
+      padding: 12px 14px 14px;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.55;
     }
 
-    .summary {
+    /* Sidebar */
+    .side {
+      position: sticky;
+      top: 92px;
+      display: grid;
+      gap: 14px;
+    }
+    .panel {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow2);
+      padding: 14px;
+    }
+    .panel h3 {
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .panel p {
       margin: 0;
       color: var(--muted);
       font-size: 13.5px;
       line-height: 1.6;
     }
-
-    .open {
-      margin-top: 2px;
-      display: inline-flex;
-      align-items: center;
+    .panel .links {
+      margin-top: 10px;
+      display: grid;
       gap: 8px;
-      color: var(--text);
+    }
+    .panel .links a {
       text-decoration: none;
-      font-weight: 800;
+      color: var(--text);
+      font-weight: 750;
       font-size: 13.5px;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      width: fit-content;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
     }
-    .open:hover {
-      border-bottom-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    .panel .links a:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 40%, var(--panel));
     }
 
-    /* Core filtering */
-    .is-hidden { display: none !important; }
+    /* Footer nav */
+    .pager {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pager .group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-    /* Footer */
     footer {
       border-top: 1px solid var(--divider);
-      margin-top: 24px;
+      margin-top: 20px;
       padding: 22px 0;
       color: var(--muted2);
       font-size: 13px;
@@ -448,18 +529,17 @@
     .footer-links a:hover { color: var(--text); }
 
     @media (max-width: 980px) {
-      .toc { grid-template-columns: repeat(2, 1fr); }
-      .search { min-width: 100%; }
-      .controls { gap: 12px; }
+      .layout { grid-template-columns: 1fr; }
+      .side { position: relative; top: auto; }
     }
-    @media (max-width: 640px) {
-      .toc { grid-template-columns: 1fr; }
+    @media (max-width: 760px) {
       .nav-links { display: none; }
       .hamburger { display: inline-grid; }
       .mobile-panel { display: none; }
       .mobile-panel.open { display: block; }
       .brand-sub { display: none; }
       main { padding-top: 20px; }
+      .media-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -471,20 +551,20 @@
   <!-- NAV -->
   <header class="nav">
     <div class="wrap nav-inner">
-      <a class="brand" href="index.html" aria-label="BOS Lite Home">
+      <a class="brand" href="../index.html" aria-label="BOS Lite Home">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-name">BOS Lite</span>
         <span class="brand-sub">Reality-Anchored Decision Framework</span>
       </a>
 
       <nav class="nav-links" aria-label="Primary">
-        <a href="index.html">Home</a>
-        <a href="guide-cover.html">Guide</a>
-        <a href="toc.html" aria-current="page">TOC</a>
-        <a href="tool/bos-lite-runner.html">Tool</a>
-        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="../index.html">Home</a>
+        <a href="../guide-cover.html">Guide</a>
+        <a href="../toc.html">TOC</a>
+        <a href="../tool/bos-lite-runner.html">Tool</a>
+        <a href="../safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
       </nav>
 
       <div class="nav-actions">
@@ -496,7 +576,7 @@
           </svg>
         </button>
 
-        <a class="btn" href="guide-cover.html">Back to Cover</a>
+        <a class="btn" href="../toc.html">Back to TOC</a>
         <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M21 13.2A8.2 8.2 0 1 1 10.8 3a6.6 6.6 0 0 0 10.2 10.2Z"
@@ -508,288 +588,178 @@
 
     <div class="wrap">
       <div class="mobile-panel" id="mobilePanel" aria-label="Mobile Navigation">
-        <a href="index.html">Home</a>
-        <a href="guide-cover.html">Guide Cover</a>
-        <a href="toc.html" aria-current="page">Table of Contents</a>
-        <a href="tool/bos-lite-runner.html">Tool</a>
-        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
+        <a href="../index.html">Home</a>
+        <a href="../guide-cover.html">Guide Cover</a>
+        <a href="../toc.html">Table of Contents</a>
+        <a href="../tool/bos-lite-runner.html">Tool</a>
+        <a href="../safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="../about.html">About</a>
+        <a href="../contact.html">Contact</a>
       </div>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- PAGE HEADER -->
-    <section class="page-head" aria-label="Table of Contents header">
-      <span class="kicker"><span class="k-dot" aria-hidden="true"></span> BOS Lite • Table of Contents</span>
-      <h1>22 Parts — Read like a magazine. Use like a tool.</h1>
-      <p class="lead">
-        Each chapter is written to reduce confident self-deception by forcing reality contact.
-        The <strong>Core Modules</strong> are the chapters where most people try to cheat the system — and BOS Lite refuses to let them.
+    <nav class="crumbs" aria-label="Breadcrumbs">
+      <a href="../guide-cover.html">Guide</a>
+      <span aria-hidden="true">›</span>
+      <a href="../toc.html">Table of Contents</a>
+      <span aria-hidden="true">›</span>
+      <span>Part 01</span>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Part 01 header">
+      <span class="kicker"><span class="k-dot" aria-hidden="true"></span> Part 01 • Introduction</span>
+      <h1>Why This Exists, and Why It’s Called BOS</h1>
+      <p class="deck">
+        BOS Lite exists to interrupt the loop where people confuse internal clarity with real-world movement —
+        and to replace comfort-based explanations with survivable contact with reality.
       </p>
 
-      <div class="controls" aria-label="TOC controls">
-        <div class="control-left">
-          <div class="search" role="search">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
-              <path d="M16.8 16.8 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-            <input id="searchInput" type="search" placeholder="Search chapters by keyword (e.g., rejection, silence, leverage)..." aria-label="Search chapters" />
-          </div>
-
-          <div class="toggle" id="coreToggle" data-on="false" role="button" tabindex="0" aria-label="Toggle Core Modules filter">
-            <span class="switch" aria-hidden="true"></span>
-            Core Modules
-            <small>(only)</small>
-          </div>
+      <div class="hero-actions">
+        <div class="left">
+          <span class="pill">Body font: 16px</span>
+          <span class="pill">Magazine layout</span>
+          <span class="pill">Placeholders ready</span>
         </div>
-
-        <div class="control-right">
-          <a class="btn primary" href="bos-lite/part-01.html">Start at Part 1 →</a>
+        <div class="right">
+          <a class="btn" href="../guide-cover.html">Cover</a>
+          <a class="btn primary" href="../toc.html">TOC</a>
         </div>
       </div>
     </section>
 
-    <!-- TOC GRID -->
-    <section class="toc" id="tocGrid" aria-label="Table of Contents list">
-
-      <!-- Part 01 -->
-      <article class="card" data-part="1" data-core="false" data-title="(Intro) Why This Exists, and Why It’s Called BOS">
-        <div class="row">
-          <div class="part">Part 01</div>
+    <section class="layout" aria-label="Article layout">
+      <!-- ARTICLE -->
+      <article class="article" aria-label="Article content">
+        <!-- IMAGE PLACEHOLDERS -->
+        <div class="media-grid" aria-label="Image placeholders">
+          <div class="ph" role="img" aria-label="Image placeholder 1">
+            <div class="label">Image Placeholder</div>
+            <div class="hint">16:9 recommended • editorial chapter opener image</div>
+          </div>
+          <div class="ph" role="img" aria-label="Image placeholder 2">
+            <div class="label">Image Placeholder</div>
+            <div class="hint">Optional supporting visual • diagram / symbolic image</div>
+          </div>
         </div>
-        <h3 class="title">(Intro) Why This Exists, and Why It’s Called BOS</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-01.html">Open Chapter →</a>
+
+        <!-- VIDEO PLACEHOLDER (monitor frame) -->
+        <div class="monitor" aria-label="Video placeholder framed as a monitor">
+          <div class="monitor-top">
+            <div class="dots" aria-hidden="true">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <div class="monitor-title">Explainer Video • 16:9</div>
+            <div style="width:44px"></div>
+          </div>
+          <div class="monitor-screen">
+            <div class="play" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <path d="M8.5 6.8v10.4a1 1 0 0 0 1.5.86l8.5-5.2a1 1 0 0 0 0-1.72L10 5.94a1 1 0 0 0-1.5.86Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+          <div class="monitor-caption">
+            Replace this placeholder with an embedded video (YouTube/Vimeo) or a local MP4.
+            Keep it calm and editorial — this should feel like a “screen inside a magazine.”
+          </div>
+        </div>
+
+        <!-- BODY (provided text) -->
+        <div class="prose" aria-label="Body text">
+          <p>Most people aren’t stuck because they lack intelligence, motivation, or potential. They’re stuck because they are trapped inside their own thinking. Their plans sound reasonable. Their explanations feel solid. Their logic makes sense to them. And yet, nothing outside of them ever changes. Weeks go by. Months pass. Life stays the same. What they mistake for progress is often just clarity, and clarity is comfortable. Comfort is convincing. Comfort is also deceptive.</p>
+
+          <p>BOS Lite exists because this pattern is everywhere, and most modern advice quietly reinforces it. We are taught to reflect more, plan better, think positively, visualize outcomes, and trust the process. We are encouraged to feel confident before acting, to understand before testing, and to wait until things feel aligned. The result is a population of capable people who spend years refining explanations instead of colliding with reality. They become very good at sounding thoughtful while staying stuck.</p>
+
+          <p>BOS Lite is intentionally anti-confirmation. It is designed to push people out of their own way, gently but firmly. Not by demanding confidence. Not by forcing big risks. Not by motivating or reassuring. Instead, it works by narrowing attention, reducing options, and guiding people toward small, survivable actions that reality can respond to. The goal is not to feel better. The goal is to find out what actually works.</p>
+
+          <div class="callout">Think of BOS Lite like being nudged out of a nest just far enough to test your wings. Not thrown into the air. Not shamed for hesitating. Just guided to a point where the world can answer back.</div>
+
+          <p>This is not self-help. It does not motivate you. It does not inspire you. It does not tell you to believe harder, think bigger, or trust yourself more. BOS Lite is designed to do the opposite of what most advice does. Instead of protecting your explanations, it challenges them. Instead of validating your reasoning, it tests it. Instead of encouraging you to stay inside your head until you feel ready, it helps you step into the smallest possible interaction with reality and learn from what happens.</p>
+
+          <p>That brings us to the name, because this is where many people understandably pause.</p>
+
+          <p>If you are not a billionaire, why call this the Billionaire Operating System?</p>
+
+          <p>This concern is legitimate, and it deserves a direct, honest answer. There is no hidden status claim here. There is no implication of insider access, secret knowledge, or elite credentials. The name does not refer to who created the system or what outcomes it guarantees. It refers to the operating constraints the system enforces, not the identity of the person using it.</p>
+
+          <p>“Billionaire” in BOS does not mean wealth owned. It means the conditions under which mistakes are expensive, feedback is unforgiving, and reality does not tolerate comforting stories. At high stakes, bad decisions are punished quickly. Effort without leverage is irrelevant. Confidence without results is dangerous. Explanations do not matter if outcomes do not follow. Those constraints exist whether someone has ten dollars or ten billion dollars. BOS is named after that operating standard, not an outcome or an aspiration.</p>
+
+          <p>This naming logic already exists everywhere, and we rarely question it. We use professional-grade tools without being professionals. We apply Olympic training principles without being Olympians. We study enterprise systems without running enterprises. No one asks whether the user “deserves” the name. The only question that matters is whether the constraints are real.</p>
+
+          <p>BOS enforces constraints that mirror high-stakes environments. It prioritizes outcomes over intention. It values leverage over effort. It requires external feedback instead of internal certainty. It kills strategies that do not work instead of protecting sunk costs. It refuses to let good explanations stand in for real-world movement. These are billionaire-level constraints because they are the constraints reality imposes when the stakes are high, not because they guarantee wealth.</p>
+
+          <p>In fact, BOS does not teach how to become rich. That distinction is critical. It teaches how to stop operating in ways that make progress impossible. It is not a roadmap to success. It is a filter that removes behaviors that quietly keep people stuck, regardless of how smart or hardworking they are.</p>
+
+          <p>This is also why BOS does not ask you to trust it.</p>
+
+          <p>Most systems ask for trust up front. They rely on authority, credentials, elegance, or emotional resonance. BOS does the opposite. It explicitly tells you not to trust the system, not to trust AI, not to trust explanations, and not to trust confidence. It gives veto power to reality. If the world does not respond, the system is wrong. If nothing outside of you changes, BOS treats that as failure. The system is designed to lose authority the moment it stops working.</p>
+
+          <p>That is why it can be trusted more than most frameworks. It cannot be flattered. It cannot be reassured. It cannot survive on coherence alone. It either produces interaction with reality or it dies. Very few systems are built to invalidate themselves when they fail.</p>
+
+          <p>BOS Lite is the public, safe version of this logic. It takes the core idea and scales it down to human size. It assumes limited time, limited energy, real responsibilities, and real pressure. It removes anything that would require extreme risk tolerance or emotional hardness. It does not demand relentless output or high-stakes gambles. It focuses on small actions, clear exposure, and honest feedback.</p>
+
+          <p>Most people do not need a grand strategy. They need a way to stop confusing preparation with progress. They need a system that interrupts overthinking without demanding recklessness. They need structure that reduces self-deception without attacking their identity. BOS Lite exists for that exact gap.</p>
+
+          <p>It is important to say this clearly: BOS Lite does not promise outcomes. It does not claim to change your life. It does not guarantee success, income, clarity, or confidence. It guarantees nothing except one thing — that you will collide with reality faster than you would on your own. What you do with that collision is your responsibility.</p>
+
+          <p>This is also why BOS Lite is explicit about who it is not for. It is not therapy. It is not emotional support. It is not a substitute for professional help. It is not designed for people in crisis or instability. It does not soften feedback to preserve feelings. It does not protect self-esteem. If someone needs reassurance more than correction, BOS Lite is the wrong tool, and that boundary is intentional.</p>
+
+          <p>The reason people resonate with BOS is not because they want to be billionaires. It is because they are tired of systems that sound smart but change nothing. They are tired of advice that collapses under pressure. They are tired of being told to think differently when what they need is to act differently. They want less self-deception, not more motivation.</p>
+
+          <p>The name “Billionaire Operating System” signals something important. It signals that this system will not indulge explanations. It will not confuse effort with leverage. It will not pretend comfort is progress. It will not protect narratives that reality refuses to confirm. That is the promise, and it is deliberately narrow.</p>
+
+          <p>BOS Lite does not ask you to become someone else. It asks you to stop doing a few specific things that quietly keep your life the same. It is less about transformation and more about subtraction. Less noise. Less justification. Less waiting. More contact with reality, at a pace you can survive.</p>
+
+          <p>In the next section, we will get concrete. We will talk about what BOS Lite actually is, what it is not, who it is designed for, and who should not use it at all. The goal is not to persuade you. The goal is to give you enough clarity to decide, honestly, whether this is a tool you want to try.</p>
+
+          <p>If you want comfort, validation, or inspiration, this is not the right system. If you want faster feedback, clearer decisions, and fewer comforting illusions, keep reading.</p>
+        </div>
+
+        <!-- PAGER -->
+        <div class="pager" aria-label="Chapter navigation">
+          <div class="group">
+            <a class="btn" href="../toc.html">← Back to TOC</a>
+          </div>
+          <div class="group">
+            <a class="btn primary" href="part-02.html">Next: Part 02 →</a>
+          </div>
+        </div>
       </article>
 
-      <!-- Part 02 -->
-      <article class="card" data-part="2" data-core="false" data-title="What This System Actually Is (and Why Most People Misunderstand That)">
-        <div class="row">
-          <div class="part">Part 02</div>
-        </div>
-        <h3 class="title">What This System Actually Is (and Why Most People Misunderstand That)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-02.html">Open Chapter →</a>
-      </article>
+      <!-- SIDEBAR -->
+      <aside class="side" aria-label="Sidebar">
+        <section class="panel" aria-label="Quick actions">
+          <h3>Quick Actions</h3>
+          <p>Keep navigation frictionless. BOS works best when you can move between parts without getting lost.</p>
+          <div class="links">
+            <a href="../guide-cover.html">Open Guide Cover</a>
+            <a href="../toc.html">Open Table of Contents</a>
+            <a href="../tool/ten-minute-tests.html">10-Minute Tests</a>
+            <a href="../safeguards/what-bos-does-not-work-for.html">What BOS Is Not For</a>
+          </div>
+        </section>
 
-      <!-- Part 03 -->
-      <article class="card" data-part="3" data-core="false" data-title="How BOS Lite Actually Works in Real Life">
-        <div class="row">
-          <div class="part">Part 03</div>
-        </div>
-        <h3 class="title">How BOS Lite Actually Works in Real Life</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-03.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 04 -->
-      <article class="card" data-part="4" data-core="false" data-title="What Leverage Really Means (And Why Most People Don’t Have It)">
-        <div class="row">
-          <div class="part">Part 04</div>
-        </div>
-        <h3 class="title">What Leverage Really Means (And Why Most People Don’t Have It)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-04.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 05 -->
-      <article class="card" data-part="5" data-core="false" data-title="Why BOS Lite Refuses to Motivate You (And Why That’s a Relief)">
-        <div class="row">
-          <div class="part">Part 05</div>
-        </div>
-        <h3 class="title">Why BOS Lite Refuses to Motivate You (And Why That’s a Relief)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-05.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 06 -->
-      <article class="card" data-part="6" data-core="false" data-title="Discomfort, Rejection, and Why BOS Lite Treats Them as Signals, Not Threats">
-        <div class="row">
-          <div class="part">Part 06</div>
-        </div>
-        <h3 class="title">Discomfort, Rejection, and Why BOS Lite Treats Them as Signals, Not Threats</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-06.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 07 -->
-      <article class="card" data-part="7" data-core="false" data-title="Why BOS Lite Is Intentionally Simple (and Why Complexity Keeps People Stuck)">
-        <div class="row">
-          <div class="part">Part 07</div>
-        </div>
-        <h3 class="title">Why BOS Lite Is Intentionally Simple (and Why Complexity Keeps People Stuck)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-07.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 08 -->
-      <article class="card" data-part="8" data-core="false" data-title="Why It’s Called the “Billionaire Operating System” (and Why That Name Is Not What You Think)">
-        <div class="row">
-          <div class="part">Part 08</div>
-        </div>
-        <h3 class="title">Why It’s Called the “Billionaire Operating System” (and Why That Name Is Not What You Think)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-08.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 09 -->
-      <article class="card" data-part="9" data-core="false" data-title="Why Discomfort Shows Up (and What It Actually Means)">
-        <div class="row">
-          <div class="part">Part 09</div>
-        </div>
-        <h3 class="title">Why Discomfort Shows Up (and What It Actually Means)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-09.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 10 (CORE) -->
-      <article class="card" data-part="10" data-core="true" data-title="How People Try to Game the System (and Why BOS Lite Exposes It)">
-        <div class="row">
-          <div class="part">Part 10</div>
-          <div class="badge core">Core</div>
-        </div>
-        <h3 class="title">How People Try to Game the System (and Why BOS Lite Exposes It)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-10.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 11 -->
-      <article class="card" data-part="11" data-core="false" data-title="Failure, Rejection, and Silence (and Why BOS Lite Treats Them Differently)">
-        <div class="row">
-          <div class="part">Part 11</div>
-        </div>
-        <h3 class="title">Failure, Rejection, and Silence (and Why BOS Lite Treats Them Differently)</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-11.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 12 (CORE) -->
-      <article class="card" data-part="12" data-core="true" data-title="Overthinking, Hesitation, and the Trap of “Almost Doing”">
-        <div class="row">
-          <div class="part">Part 12</div>
-          <div class="badge core">Core</div>
-        </div>
-        <h3 class="title">Overthinking, Hesitation, and the Trap of “Almost Doing”</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-12.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 13 -->
-      <article class="card" data-part="13" data-core="false" data-title="Time, Patience, and Learning Without Waiting Forever">
-        <div class="row">
-          <div class="part">Part 13</div>
-        </div>
-        <h3 class="title">Time, Patience, and Learning Without Waiting Forever</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-13.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 14 (CORE) -->
-      <article class="card" data-part="14" data-core="true" data-title="Rejection, Silence, and Disappointment as Information">
-        <div class="row">
-          <div class="part">Part 14</div>
-          <div class="badge core">Core</div>
-        </div>
-        <h3 class="title">Rejection, Silence, and Disappointment as Information</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-14.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 15 -->
-      <article class="card" data-part="15" data-core="false" data-title="Effort, Worth, and the Trap of Self-Punishment">
-        <div class="row">
-          <div class="part">Part 15</div>
-        </div>
-        <h3 class="title">Effort, Worth, and the Trap of Self-Punishment</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-15.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 16 -->
-      <article class="card" data-part="16" data-core="false" data-title="Recovery, Pacing, and the Difference Between Stopping and Quitting">
-        <div class="row">
-          <div class="part">Part 16</div>
-        </div>
-        <h3 class="title">Recovery, Pacing, and the Difference Between Stopping and Quitting</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-16.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 17 -->
-      <article class="card" data-part="17" data-core="false" data-title="Silence, Indifference, and the Feedback Most People Avoid">
-        <div class="row">
-          <div class="part">Part 17</div>
-        </div>
-        <h3 class="title">Silence, Indifference, and the Feedback Most People Avoid</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-17.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 18 (CORE) -->
-      <article class="card" data-part="18" data-core="true" data-title="Rejection as Information, Not Identity">
-        <div class="row">
-          <div class="part">Part 18</div>
-          <div class="badge core">Core</div>
-        </div>
-        <h3 class="title">Rejection as Information, Not Identity</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-18.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 19 (CORE) -->
-      <article class="card" data-part="19" data-core="true" data-title="Consistency, Momentum, and the Trap of Repetition">
-        <div class="row">
-          <div class="part">Part 19</div>
-          <div class="badge core">Core</div>
-        </div>
-        <h3 class="title">Consistency, Momentum, and the Trap of Repetition</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-19.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 20 -->
-      <article class="card" data-part="20" data-core="false" data-title="Letting Go Without Self-Blame">
-        <div class="row">
-          <div class="part">Part 20</div>
-        </div>
-        <h3 class="title">Letting Go Without Self-Blame</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-20.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 21 -->
-      <article class="card" data-part="21" data-core="false" data-title="Rebuilding Self-Trust Without Blind Confidence">
-        <div class="row">
-          <div class="part">Part 21</div>
-        </div>
-        <h3 class="title">Rebuilding Self-Trust Without Blind Confidence</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-21.html">Open Chapter →</a>
-      </article>
-
-      <!-- Part 22 -->
-      <article class="card" data-part="22" data-core="false" data-title="(Final) What BOS Lite Ultimately Gives You">
-        <div class="row">
-          <div class="part">Part 22</div>
-        </div>
-        <h3 class="title">(Final) What BOS Lite Ultimately Gives You</h3>
-        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
-        <a class="open" href="bos-lite/part-22.html">Open Chapter →</a>
-      </article>
-
+        <section class="panel" aria-label="Media placeholders">
+          <h3>Placeholders</h3>
+          <p>
+            Replace the image placeholders with your chapter visuals, and replace the monitor placeholder with a
+            NotebookLM explainer video embed (16:9).
+          </p>
+        </section>
+      </aside>
     </section>
 
     <footer>
       <div class="wrap footer-row">
         <div>© <span id="year"></span> BOS Lite • Reference-Only</div>
         <div class="footer-links">
-          <a href="safeguards/disclaimer.html">Disclaimer</a>
-          <a href="safeguards/terms-of-use.html">Terms</a>
-          <a href="safeguards/data-deletion.html">Data Deletion</a>
-          <a href="safeguards/legal-notice.html">Legal Notice</a>
+          <a href="../safeguards/disclaimer.html">Disclaimer</a>
+          <a href="../safeguards/terms-of-use.html">Terms</a>
+          <a href="../safeguards/data-deletion.html">Data Deletion</a>
+          <a href="../safeguards/legal-notice.html">Legal Notice</a>
         </div>
       </div>
     </footer>
@@ -803,13 +773,9 @@
       const mobilePanel = document.getElementById('mobilePanel');
       const year = document.getElementById('year');
 
-      const searchInput = document.getElementById('searchInput');
-      const coreToggle = document.getElementById('coreToggle');
-      const cards = Array.from(document.querySelectorAll('.card'));
-
       year.textContent = new Date().getFullYear();
 
-      // Theme
+      // Theme: load persisted preference, else system preference
       const stored = localStorage.getItem('bos_theme');
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const initial = stored || (prefersDark ? 'dark' : 'light');
@@ -831,44 +797,6 @@
         const isOpen = mobilePanel.classList.toggle('open');
         menuBtn.setAttribute('aria-expanded', String(isOpen));
       });
-
-      // Core toggle
-      function toggleCore(on) {
-        coreToggle.dataset.on = String(on);
-        applyFilters();
-      }
-
-      coreToggle?.addEventListener('click', () => {
-        toggleCore(coreToggle.dataset.on !== 'true');
-      });
-
-      coreToggle?.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          toggleCore(coreToggle.dataset.on !== 'true');
-        }
-      });
-
-      // Search + filter
-      function applyFilters() {
-        const q = (searchInput.value || "").trim().toLowerCase();
-        const coreOnly = coreToggle.dataset.on === 'true';
-
-        cards.forEach(card => {
-          const title = (card.getAttribute('data-title') || "").toLowerCase();
-          const isCore = card.getAttribute('data-core') === 'true';
-
-          const matchesQuery = !q || title.includes(q);
-          const matchesCore = !coreOnly || isCore;
-
-          card.classList.toggle('is-hidden', !(matchesQuery && matchesCore));
-        });
-      }
-
-      searchInput?.addEventListener('input', applyFilters);
-
-      // Start with filters applied (in case of autofill)
-      applyFilters();
     })();
   </script>
 </body>
