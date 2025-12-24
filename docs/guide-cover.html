@@ -3,25 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="BOS Lite Guide — cover and entry point to the full Table of Contents and chapters." />
+  <meta name="description" content="BOS Lite Guide — cover and entry point to the Table of Contents and chapters." />
   <title>BOS Lite Guide — Cover</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================================================
-       BOS Lite — Guide Cover (guide-cover.html)
-       Goal:
-       - First thing seen: cover image
-       - Prominent contrasting ENTER button beneath image
-       - Welcome text: “Welcome to the Billionaire Operating System”
-       ========================================================= */
-
     :root {
-      /* Light mode */
       --bg: #F4F6F8;
       --panel: rgba(255,255,255,0.72);
       --panel-solid: #FFFFFF;
@@ -36,17 +27,11 @@
       --radius-xl: 22px;
       --radius-lg: 16px;
 
-      /* Strong CTA (contrasting) */
-      --cta-bg: #243447;         /* deep slate */
-      --cta-text: #F4F6F8;       /* fog */
-      --cta-border: rgba(36,52,71,0.22);
-
       --serif: "Libre Baskerville", ui-serif, Georgia, serif;
       --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
     }
 
     html[data-theme="dark"] {
-      /* Dark cognitive mode */
       --bg: #0B0E14;
       --panel: rgba(26,31,43,0.66);
       --panel-solid: rgba(26,31,43,0.96);
@@ -58,11 +43,6 @@
       --divider: rgba(230,232,235,0.12);
       --shadow: 0 18px 54px rgba(0,0,0,0.48);
       --shadow2: 0 12px 30px rgba(0,0,0,0.45);
-
-      /* Strong CTA (contrasting) */
-      --cta-bg: #7AA2F7;         /* bright accent */
-      --cta-text: #0B0E14;       /* dark bg */
-      --cta-border: rgba(122,162,247,0.25);
     }
 
     * { box-sizing: border-box; }
@@ -75,7 +55,6 @@
       overflow-x: hidden;
     }
 
-    /* Subtle background texture / cognitive gradient */
     .bg {
       position: fixed; inset: 0; z-index: -2;
       background:
@@ -91,7 +70,6 @@
         linear-gradient(180deg, rgba(26,31,43,0.60), rgba(11,14,20,0.94));
     }
 
-    /* Fine grid overlay */
     .grid {
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background-image:
@@ -160,12 +138,15 @@
       align-items: center;
       gap: 10px;
       justify-content: center;
-      white-space: nowrap;
     }
     .btn:hover {
       transform: translateY(-1px);
       border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
       background: color-mix(in srgb, var(--accent-2) 44%, var(--panel));
+    }
+    .btn.primary {
+      border-color: color-mix(in srgb, var(--accent) 60%, var(--divider));
+      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
     }
 
     .icon-btn {
@@ -205,10 +186,16 @@
       background: var(--accent-2);
       color: var(--text);
     }
-    .mobile-panel.open { display: block; }
 
-    /* Cover layout */
-    main { padding: 18px 0 54px; }
+    /* Cover */
+    main { padding: 34px 0 54px; }
+
+    /* Make it feel like a cover: image first, everything else below */
+    .cover {
+      display: grid;
+      gap: 16px;
+    }
+
     .cover-card {
       border: 1px solid var(--divider);
       background: var(--panel);
@@ -217,79 +204,98 @@
       padding: 18px;
       overflow: hidden;
     }
+
+    /* Clickable cover wrapper */
+    .cover-link {
+      display: block;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      outline: none;
+    }
+
     .cover-img {
       width: 100%;
       height: min(74vh, 760px);
-      border-radius: var(--radius-xl);
       display: block;
-      object-fit: cover; /* full-bleed hero feel */
-      border: 1px solid var(--divider);
-      background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
+      object-fit: cover; /* full-bleed cover look */
+      transform: scale(1);
+      transition: transform 220ms ease, filter 220ms ease;
+    }
+
+    /* Subtle “tap/enter” affordance without text on the image itself */
+    .cover-link::after {
+      content: "Click to Enter →";
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--divider) 70%, transparent);
+      background: color-mix(in srgb, var(--panel-solid) 78%, transparent);
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 220ms ease, transform 220ms ease, background 220ms ease;
+      pointer-events: none;
+    }
+
+    .cover-link:hover .cover-img {
+      transform: scale(1.012);
+      filter: saturate(1.03);
+    }
+    .cover-link:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cover-link:focus-visible {
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent);
+    }
+    .cover-link:focus-visible::after {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .cover-meta {
-      margin-top: 16px;
       display: grid;
-      gap: 10px;
+      gap: 12px;
       justify-items: center;
       text-align: center;
-      padding: 2px 8px 6px;
-    }
-
-    .welcome {
-      margin: 10px 0 0;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: var(--muted2);
     }
 
     h1 {
-      margin: 6px 0 0;
+      margin: 0;
       font-family: var(--serif);
       letter-spacing: -0.03em;
-      font-size: clamp(22px, 2.2vw, 32px);
+      font-size: clamp(22px, 2.2vw, 30px);
       line-height: 1.18;
     }
 
     .sub {
-      margin: 6px 0 0;
+      margin: 0;
       color: var(--muted);
-      font-size: 14.5px;
-      line-height: 1.7;
-      max-width: 70ch;
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 72ch;
     }
 
     .cta {
-      margin-top: 10px;
+      margin-top: 2px;
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
-    }
-
-    /* Contrasting Enter button */
-    .btn.enter {
-      background: var(--cta-bg);
-      color: var(--cta-text);
-      border-color: var(--cta-border);
-      padding: 12px 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-    .btn.enter:hover {
-      transform: translateY(-2px);
-      background: color-mix(in srgb, var(--cta-bg) 92%, white 8%);
-    }
-    html[data-theme="dark"] .btn.enter:hover {
-      background: color-mix(in srgb, var(--cta-bg) 92%, black 8%);
     }
 
     .note {
-      margin-top: 10px;
+      margin-top: 6px;
       color: var(--muted2);
       font-size: 12.5px;
     }
@@ -297,10 +303,13 @@
     @media (max-width: 760px) {
       .nav-links { display: none; }
       .hamburger { display: inline-grid; }
+      .mobile-panel { display: none; }
+      .mobile-panel.open { display: block; }
       .brand-sub { display: none; }
-      main { padding-top: 14px; }
+      main { padding-top: 22px; }
       .cover-card { padding: 14px; }
-      .cover-img { height: min(64vh, 520px); }
+      .cover-img { height: min(68vh, 540px); }
+      .cover-link::after { right: 12px; bottom: 12px; }
     }
   </style>
 </head>
@@ -336,11 +345,11 @@
           </svg>
         </button>
 
-        <!-- Quick links back to the exact Home anchors -->
+        <!-- Optional: quick links back to Home anchors -->
         <a class="btn" href="index.html#read-guide">Home: Read the Guide</a>
         <a class="btn" href="index.html#toc">Home: Open TOC</a>
 
-        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M21 13.2A8.2 8.2 0 1 1 10.8 3a6.6 6.6 0 0 0 10.2 10.2Z"
                   stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -364,36 +373,32 @@
 
   <!-- COVER -->
   <main class="wrap">
-    <section class="cover-card" aria-label="Guide cover">
-      <!-- First thing seen: cover image -->
-      <img
-        class="cover-img"
-        src="assets/images/guide-cover-21x9.png"
-        alt="A translucent Black male head in 3/4 profile view with a stylized brain and glowing neural network inside, against an indigo-to-slate gradient background."
-        loading="eager"
-      />
+    <section class="cover-card cover" aria-label="Guide cover">
 
-      <!-- Button immediately under image + welcome text -->
+      <!-- COVER IMAGE FIRST (clickable, links to TOC) -->
+      <a class="cover-link" href="toc.html" aria-label="Enter the guide and open the Table of Contents">
+        <img
+          class="cover-img"
+          src="assets/images/guide-cover-21x9.png"
+          alt="A translucent Black male head in 3/4 profile view with a stylized brain and glowing neural network inside, against an indigo-to-slate gradient background."
+          loading="eager"
+        />
+      </a>
+
+      <!-- BELOW THE COVER: optional title + buttons -->
       <div class="cover-meta">
-        <div class="welcome">Welcome to the Billionaire Operating System</div>
-
         <h1>The Billionaire Operating System (BOS Lite)</h1>
-
         <p class="sub">
-          A reality-anchored decision &amp; action framework. This guide is designed to be read like a magazine:
-          calm, sequential, and usable — with reality contact as the standard.
+          A reality-anchored decision &amp; action framework. Read it like a magazine: calm, sequential, usable —
+          with reality contact as the standard.
         </p>
 
         <div class="cta">
-          <a class="btn enter" href="guide-cover.html" aria-label="Enter and read the guide">
-            ENTER — Read the Guide →
-          </a>
-          <a class="btn" href="index.html" aria-label="Back to home">
-            Back to Home
-          </a>
+          <a class="btn primary" href="toc.html">Begin Here →</a>
+          <a class="btn" href="index.html">Back to Home</a>
         </div>
 
-        <div class="note">No advice. No hype. Just observation and feedback.</div>
+        <div class="note">Tip: click the cover image to enter.</div>
       </div>
     </section>
   </main>
@@ -431,4 +436,3 @@
   </script>
 </body>
 </html>
-
