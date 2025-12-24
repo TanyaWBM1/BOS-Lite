@@ -55,6 +55,17 @@
       overflow-x: hidden;
     }
 
+    /* optional progress bar (tiny, clean) */
+    .progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent);
+      z-index: 9999;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
     .bg {
       position: fixed; inset: 0; z-index: -2;
       background:
@@ -250,7 +261,7 @@
     .deck {
       margin: 0;
       color: var(--muted);
-      font-size: 16px; /* requested body font size 16 */
+      font-size: 16px;
       line-height: 1.65;
       max-width: 90ch;
     }
@@ -300,15 +311,12 @@
       overflow: hidden;
     }
 
-    /* Magazine typography */
     .prose {
-      font-size: 16px; /* requested body font size 16 */
+      font-size: 16px;
       line-height: 1.85;
       color: var(--text);
     }
-    .prose p {
-      margin: 0 0 14px;
-    }
+    .prose p { margin: 0 0 14px; }
     .prose p:first-of-type::first-letter {
       font-family: var(--serif);
       font-weight: 700;
@@ -330,64 +338,9 @@
       line-height: 1.7;
     }
 
-    /* Image placeholders */
-    .media-grid {
-      margin: 18px 0 6px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .ph {
-      border: 1px dashed color-mix(in srgb, var(--divider) 85%, transparent);
-      border-radius: var(--radius-xl);
-      background: color-mix(in srgb, var(--panel-solid) 65%, transparent);
-      overflow: hidden;
-      min-height: 220px;
-      position: relative;
-    }
-    html[data-theme="dark"] .ph {
-      background: color-mix(in srgb, var(--panel-solid) 18%, transparent);
-    }
-    .ph::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(480px 260px at 20% 25%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-    .ph .label {
-      position: absolute;
-      left: 14px;
-      top: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--divider);
-      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
-      font-weight: 800;
-      font-size: 12px;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--muted2);
-    }
-    .ph .hint {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      right: 14px;
-      color: var(--muted);
-      font-weight: 650;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
     /* Video placeholder framed as a monitor */
     .monitor {
-      margin: 16px 0 4px;
+      margin: 10px 0 4px;
       border-radius: var(--radius-xl);
       background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
       border: 1px solid var(--divider);
@@ -440,6 +393,280 @@
       color: var(--muted);
       font-size: 13.5px;
       line-height: 1.55;
+    }
+
+    /* ===========================
+       OPTION SET B MODULES
+       =========================== */
+
+    /* 1) Thumbnail + caption (magazine break) */
+    .thumb-break {
+      margin: 18px 0 18px;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 14px;
+      align-items: start;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 70%, transparent);
+      border-radius: var(--radius-xl);
+      padding: 12px;
+      box-shadow: var(--shadow2);
+    }
+    .thumb {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 60%, transparent);
+      aspect-ratio: 1 / 1;
+      position: relative;
+    }
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .thumb .ph-label {
+      position: absolute;
+      left: 10px; top: 10px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 78%, transparent);
+      color: var(--muted2);
+      font-weight: 800;
+      font-size: 11px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+    }
+    .thumb-meta h4 {
+      margin: 2px 0 6px;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .thumb-meta p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+      max-width: 78ch;
+    }
+    .thumb-meta small {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--muted2);
+      font-weight: 650;
+      font-size: 12.5px;
+    }
+
+    /* 2) Poll box (localStorage) */
+    .module {
+      margin: 18px 0;
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      box-shadow: var(--shadow2);
+      overflow: hidden;
+      position: relative;
+    }
+    .module:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(560px 300px at 20% 25%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%);
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .module-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
+      color: var(--muted2);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .module h3 {
+      margin: 0;
+      font-family: var(--serif);
+      letter-spacing: -0.02em;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .module p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+
+    .poll-options {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .poll-btn {
+      text-align: left;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      border-radius: 14px;
+      padding: 12px 12px;
+      font-weight: 750;
+      color: var(--text);
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+    .poll-btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 40%, var(--panel));
+    }
+    .poll-foot {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tiny {
+      color: var(--muted2);
+      font-size: 12.5px;
+      font-weight: 650;
+    }
+    .ghost {
+      border: 1px solid var(--divider);
+      background: transparent;
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+    .ghost:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 30%, transparent);
+    }
+
+    .results {
+      margin-top: 12px;
+      display: none;
+      gap: 10px;
+    }
+    .results.open { display: grid; }
+    .bar {
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      overflow: hidden;
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+    }
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-weight: 750;
+      font-size: 13.5px;
+    }
+    .bar-fill {
+      height: 10px;
+      width: 0%;
+      background: color-mix(in srgb, var(--accent) 70%, transparent);
+      transition: width 320ms ease;
+    }
+
+    /* 3) Test scenario box */
+    .scenario {
+      margin: 18px 0;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 82%, transparent);
+      border-radius: var(--radius-xl);
+      padding: 14px;
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow: hidden;
+    }
+    .scenario:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(620px 320px at 82% 12%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%);
+      opacity: 0.85;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .scenario h3 {
+      margin: 0;
+      font-family: var(--serif);
+      letter-spacing: -0.02em;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .scenario .meta {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 600;
+    }
+    .steps {
+      margin-top: 12px;
+      display: grid;
+      gap: 10px;
+    }
+    .step {
+      border: 1px solid var(--divider);
+      border-radius: 14px;
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      padding: 12px;
+    }
+    .step strong {
+      display: block;
+      color: var(--text);
+      font-weight: 850;
+      font-size: 13px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      font-weight: 650;
+    }
+    .scenario-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
     }
 
     /* Sidebar */
@@ -539,12 +766,15 @@
       .mobile-panel.open { display: block; }
       .brand-sub { display: none; }
       main { padding-top: 20px; }
-      .media-grid { grid-template-columns: 1fr; }
+      .thumb-break { grid-template-columns: 1fr; }
+      .thumb { aspect-ratio: 16 / 9; }
     }
   </style>
 </head>
 
 <body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <div class="bg" aria-hidden="true"></div>
   <div class="grid" aria-hidden="true"></div>
 
@@ -620,8 +850,8 @@
       <div class="hero-actions">
         <div class="left">
           <span class="pill">Body font: 16px</span>
-          <span class="pill">Magazine layout</span>
-          <span class="pill">Placeholders ready</span>
+          <span class="pill">Interactive modules</span>
+          <span class="pill">Poll saves locally</span>
         </div>
         <div class="right">
           <a class="btn" href="../guide-cover.html">Cover</a>
@@ -633,17 +863,6 @@
     <section class="layout" aria-label="Article layout">
       <!-- ARTICLE -->
       <article class="article" aria-label="Article content">
-        <!-- IMAGE PLACEHOLDERS -->
-        <div class="media-grid" aria-label="Image placeholders">
-          <div class="ph" role="img" aria-label="Image placeholder 1">
-            <div class="label">Image Placeholder</div>
-            <div class="hint">16:9 recommended • editorial chapter opener image</div>
-          </div>
-          <div class="ph" role="img" aria-label="Image placeholder 2">
-            <div class="label">Image Placeholder</div>
-            <div class="hint">Optional supporting visual • diagram / symbolic image</div>
-          </div>
-        </div>
 
         <!-- VIDEO PLACEHOLDER (monitor frame) -->
         <div class="monitor" aria-label="Video placeholder framed as a monitor">
@@ -668,14 +887,79 @@
         </div>
 
         <!-- BODY (provided text) -->
-        <div class="prose" aria-label="Body text">
+        <div class="prose" id="article" aria-label="Body text">
           <p>Most people aren’t stuck because they lack intelligence, motivation, or potential. They’re stuck because they are trapped inside their own thinking. Their plans sound reasonable. Their explanations feel solid. Their logic makes sense to them. And yet, nothing outside of them ever changes. Weeks go by. Months pass. Life stays the same. What they mistake for progress is often just clarity, and clarity is comfortable. Comfort is convincing. Comfort is also deceptive.</p>
+
+          <!-- MODULE 1: THUMBNAIL + CAPTION (break up the wall of text) -->
+          <aside class="thumb-break" aria-label="Thumbnail visual break">
+            <div class="thumb" aria-label="Thumbnail placeholder">
+              <!-- Replace src with your real thumbnail path -->
+              <!-- Suggested path: docs/assets/images/bos-lite/part-01-thumb.jpg -->
+              <span class="ph-label">Thumbnail</span>
+              <img
+                src="../assets/images/bos-lite/part-01-thumb.jpg"
+                alt="Placeholder thumbnail for Part 01 (replace with chapter visual)."
+                onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(74,111,165,0.12), transparent 60%)';"
+              />
+            </div>
+            <div class="thumb-meta">
+              <h4>Visual Break</h4>
+              <p>
+                This chapter is about one quiet trap: <strong>confusing internal clarity with external change</strong>.
+                Use one image here that symbolizes “comfort that looks like progress.”
+              </p>
+              <small>Replace image file when ready • stays clean on mobile</small>
+            </div>
+          </aside>
 
           <p>BOS Lite exists because this pattern is everywhere, and most modern advice quietly reinforces it. We are taught to reflect more, plan better, think positively, visualize outcomes, and trust the process. We are encouraged to feel confident before acting, to understand before testing, and to wait until things feel aligned. The result is a population of capable people who spend years refining explanations instead of colliding with reality. They become very good at sounding thoughtful while staying stuck.</p>
 
           <p>BOS Lite is intentionally anti-confirmation. It is designed to push people out of their own way, gently but firmly. Not by demanding confidence. Not by forcing big risks. Not by motivating or reassuring. Instead, it works by narrowing attention, reducing options, and guiding people toward small, survivable actions that reality can respond to. The goal is not to feel better. The goal is to find out what actually works.</p>
 
           <div class="callout">Think of BOS Lite like being nudged out of a nest just far enough to test your wings. Not thrown into the air. Not shamed for hesitating. Just guided to a point where the world can answer back.</div>
+
+          <!-- MODULE 2: POLL (interactive) -->
+          <section class="module" aria-label="Reader poll">
+            <div class="module-head">
+              <div>
+                <span class="tag">Poll</span>
+                <h3>Where do you get trapped most often?</h3>
+                <p>Choose one. Your answer saves only in your browser (private to you).</p>
+              </div>
+              <button class="ghost" id="pollResetBtn" type="button" aria-label="Reset poll">Reset</button>
+            </div>
+
+            <div class="poll-options" role="group" aria-label="Poll options">
+              <button class="poll-btn" type="button" data-choice="overthinking">Overthinking &amp; endless refining</button>
+              <button class="poll-btn" type="button" data-choice="comfort">Comfort that feels like progress</button>
+              <button class="poll-btn" type="button" data-choice="waiting">Waiting until it “feels aligned”</button>
+              <button class="poll-btn" type="button" data-choice="confidence">Needing confidence before action</button>
+            </div>
+
+            <div class="results" id="pollResults" aria-label="Poll results">
+              <div class="bar" data-choice="overthinking">
+                <div class="bar-top"><span>Overthinking</span><span class="tiny" data-pct>0%</span></div>
+                <div class="bar-fill"></div>
+              </div>
+              <div class="bar" data-choice="comfort">
+                <div class="bar-top"><span>Comfort-as-progress</span><span class="tiny" data-pct>0%</span></div>
+                <div class="bar-fill"></div>
+              </div>
+              <div class="bar" data-choice="waiting">
+                <div class="bar-top"><span>Waiting-until-aligned</span><span class="tiny" data-pct>0%</span></div>
+                <div class="bar-fill"></div>
+              </div>
+              <div class="bar" data-choice="confidence">
+                <div class="bar-top"><span>Confidence-first</span><span class="tiny" data-pct>0%</span></div>
+                <div class="bar-fill"></div>
+              </div>
+            </div>
+
+            <div class="poll-foot">
+              <div class="tiny" id="pollNote">Vote to reveal results.</div>
+              <button class="ghost" id="pollRevealBtn" type="button">Show results</button>
+            </div>
+          </section>
 
           <p>This is not self-help. It does not motivate you. It does not inspire you. It does not tell you to believe harder, think bigger, or trust yourself more. BOS Lite is designed to do the opposite of what most advice does. Instead of protecting your explanations, it challenges them. Instead of validating your reasoning, it tests it. Instead of encouraging you to stay inside your head until you feel ready, it helps you step into the smallest possible interaction with reality and learn from what happens.</p>
 
@@ -684,6 +968,42 @@
           <p>If you are not a billionaire, why call this the Billionaire Operating System?</p>
 
           <p>This concern is legitimate, and it deserves a direct, honest answer. There is no hidden status claim here. There is no implication of insider access, secret knowledge, or elite credentials. The name does not refer to who created the system or what outcomes it guarantees. It refers to the operating constraints the system enforces, not the identity of the person using it.</p>
+
+          <!-- MODULE 3: TEST SCENARIO (tool-like) -->
+          <section class="scenario" aria-label="BOS test scenario">
+            <div class="module-head" style="margin-bottom:0;">
+              <div>
+                <span class="tag">Test Scenario</span>
+                <h3>Run BOS Lite on a real belief (in 10 minutes)</h3>
+                <p class="meta">This is a miniature “reality contact” test. No motivation. No hype. Just feedback.</p>
+              </div>
+              <button class="ghost" id="copyScenarioBtn" type="button">Copy</button>
+            </div>
+
+            <div class="steps" id="scenarioText">
+              <div class="step">
+                <strong>Claim</strong>
+                <p>Write one sentence you keep explaining to yourself. Example: “I’m not ready yet.”</p>
+              </div>
+              <div class="step">
+                <strong>Small test</strong>
+                <p>Choose a <em>survivable</em> action that reality can respond to in under 10 minutes (send one message, make one offer, post one draft, ask one person).</p>
+              </div>
+              <div class="step">
+                <strong>Feedback rule</strong>
+                <p>Only count external signals: reply/no reply, yes/no, click/no click, schedule/no schedule. Not your feelings.</p>
+              </div>
+              <div class="step">
+                <strong>Next move</strong>
+                <p>If reality is silent, don’t explain it. Adjust the test and run it again. If reality responds, follow the signal.</p>
+              </div>
+            </div>
+
+            <div class="scenario-actions">
+              <div class="tiny">Copy creates a notes-ready version you can paste anywhere.</div>
+              <a class="btn" href="../tool/ten-minute-tests.html">Open 10-Minute Tests →</a>
+            </div>
+          </section>
 
           <p>“Billionaire” in BOS does not mean wealth owned. It means the conditions under which mistakes are expensive, feedback is unforgiving, and reality does not tolerate comforting stories. At high stakes, bad decisions are punished quickly. Effort without leverage is irrelevant. Confidence without results is dangerous. Explanations do not matter if outcomes do not follow. Those constraints exist whether someone has ten dollars or ten billion dollars. BOS is named after that operating standard, not an outcome or an aspiration.</p>
 
@@ -742,11 +1062,10 @@
           </div>
         </section>
 
-        <section class="panel" aria-label="Media placeholders">
-          <h3>Placeholders</h3>
+        <section class="panel" aria-label="Interactive notes">
+          <h3>Interactive Notes</h3>
           <p>
-            Replace the image placeholders with your chapter visuals, and replace the monitor placeholder with a
-            NotebookLM explainer video embed (16:9).
+            Poll + test scenario save/copy locally. No accounts. No tracking. Just frictionless engagement.
           </p>
         </section>
       </aside>
@@ -773,6 +1092,18 @@
       const mobilePanel = document.getElementById('mobilePanel');
       const year = document.getElementById('year');
 
+      // Progress bar
+      const progress = document.getElementById('progress');
+      function updateProgress() {
+        const doc = document.documentElement;
+        const scrollTop = window.scrollY || doc.scrollTop;
+        const scrollHeight = doc.scrollHeight - doc.clientHeight;
+        const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+        progress.style.width = pct.toFixed(2) + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
       year.textContent = new Date().getFullYear();
 
       // Theme: load persisted preference, else system preference
@@ -796,6 +1127,130 @@
       menuBtn?.addEventListener('click', () => {
         const isOpen = mobilePanel.classList.toggle('open');
         menuBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      /* ===========================
+         POLL (localStorage)
+         Keyed to Part 01 only
+         =========================== */
+      const POLL_KEY = 'bos_poll_part_01';
+      const POLL_COUNTS_KEY = 'bos_poll_part_01_counts';
+      const pollButtons = Array.from(document.querySelectorAll('.poll-btn'));
+      const pollResults = document.getElementById('pollResults');
+      const pollRevealBtn = document.getElementById('pollRevealBtn');
+      const pollResetBtn = document.getElementById('pollResetBtn');
+      const pollNote = document.getElementById('pollNote');
+
+      function getCounts() {
+        try {
+          const raw = localStorage.getItem(POLL_COUNTS_KEY);
+          if (!raw) return { overthinking: 0, comfort: 0, waiting: 0, confidence: 0 };
+          const obj = JSON.parse(raw);
+          return { overthinking: 0, comfort: 0, waiting: 0, confidence: 0, ...obj };
+        } catch {
+          return { overthinking: 0, comfort: 0, waiting: 0, confidence: 0 };
+        }
+      }
+      function setCounts(counts) {
+        localStorage.setItem(POLL_COUNTS_KEY, JSON.stringify(counts));
+      }
+
+      function renderResults() {
+        const counts = getCounts();
+        const total = Object.values(counts).reduce((a, b) => a + b, 0) || 1;
+
+        Array.from(document.querySelectorAll('.bar')).forEach(bar => {
+          const key = bar.getAttribute('data-choice');
+          const count = counts[key] || 0;
+          const pct = Math.round((count / total) * 100);
+          const fill = bar.querySelector('.bar-fill');
+          const pctEl = bar.querySelector('[data-pct]');
+          fill.style.width = pct + '%';
+          pctEl.textContent = pct + '%';
+        });
+
+        pollResults.classList.add('open');
+        pollNote.textContent = 'Results shown (saved locally).';
+        pollRevealBtn.textContent = 'Hide results';
+      }
+
+      function hideResults() {
+        pollResults.classList.remove('open');
+        pollNote.textContent = 'Vote to reveal results.';
+        pollRevealBtn.textContent = 'Show results';
+      }
+
+      function hasVoted() {
+        return !!localStorage.getItem(POLL_KEY);
+      }
+
+      pollButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const choice = btn.getAttribute('data-choice');
+          if (!choice) return;
+
+          // Allow one vote per browser (simple)
+          if (!hasVoted()) {
+            const counts = getCounts();
+            counts[choice] = (counts[choice] || 0) + 1;
+            setCounts(counts);
+            localStorage.setItem(POLL_KEY, choice);
+          }
+
+          renderResults();
+        });
+      });
+
+      pollRevealBtn?.addEventListener('click', () => {
+        const isOpen = pollResults.classList.contains('open');
+        if (isOpen) hideResults();
+        else renderResults();
+      });
+
+      pollResetBtn?.addEventListener('click', () => {
+        localStorage.removeItem(POLL_KEY);
+        localStorage.removeItem(POLL_COUNTS_KEY);
+        hideResults();
+        pollNote.textContent = 'Reset. Vote to reveal results.';
+      });
+
+      // If already voted before, show a gentle hint
+      if (hasVoted()) {
+        pollNote.textContent = 'You already voted (saved locally).';
+      }
+
+      /* ===========================
+         Copy Test Scenario
+         =========================== */
+      const copyBtn = document.getElementById('copyScenarioBtn');
+      const scenarioText = document.getElementById('scenarioText');
+
+      copyBtn?.addEventListener('click', async () => {
+        const blocks = Array.from(scenarioText.querySelectorAll('.step'));
+        const text = blocks.map(b => {
+          const title = b.querySelector('strong')?.textContent?.trim() || '';
+          const body = b.querySelector('p')?.textContent?.trim() || '';
+          return `${title}\n${body}`;
+        }).join('\n\n');
+
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => (copyBtn.textContent = 'Copy'), 1200);
+        } catch {
+          // fallback: select text
+          const temp = document.createElement('textarea');
+          temp.value = text;
+          temp.setAttribute('readonly', '');
+          temp.style.position = 'absolute';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand('copy');
+          document.body.removeChild(temp);
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => (copyBtn.textContent = 'Copy'), 1200);
+        }
       });
     })();
   </script>
