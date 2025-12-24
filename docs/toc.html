@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="BOS Lite — Table of Contents (22 Parts). A magazine-style index of chapters with core modules highlighted." />
+  <title>BOS Lite — Table of Contents</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       BOS Lite — TOC (toc.html)
+       Matches index.html + guide-cover.html palette + UI language
+       ========================================================= */
+
+    :root {
+      --bg: #F4F6F8;
+      --panel: rgba(255,255,255,0.72);
+      --panel-solid: #FFFFFF;
+      --text: #243447;
+      --muted: rgba(36,52,71,0.72);
+      --muted2: rgba(36,52,71,0.58);
+      --accent: #4A6FA5;
+      --accent-2: rgba(74,111,165,0.12);
+      --divider: #D6DEE8;
+      --shadow: 0 16px 44px rgba(36,52,71,0.10);
+      --shadow2: 0 10px 26px rgba(36,52,71,0.10);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+
+      --serif: "Libre Baskerville", ui-serif, Georgia, serif;
+      --sans: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+    html[data-theme="dark"] {
+      --bg: #0B0E14;
+      --panel: rgba(26,31,43,0.66);
+      --panel-solid: rgba(26,31,43,0.96);
+      --text: #E6E8EB;
+      --muted: rgba(230,232,235,0.74);
+      --muted2: rgba(230,232,235,0.58);
+      --accent: #7AA2F7;
+      --accent-2: rgba(122,162,247,0.14);
+      --divider: rgba(230,232,235,0.12);
+      --shadow: 0 18px 54px rgba(0,0,0,0.48);
+      --shadow2: 0 12px 30px rgba(0,0,0,0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--sans);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    .bg {
+      position: fixed; inset: 0; z-index: -2;
+      background:
+        radial-gradient(900px 500px at 12% 6%, var(--accent-2), transparent 60%),
+        radial-gradient(700px 420px at 88% 18%, var(--accent-2), transparent 60%),
+        radial-gradient(900px 520px at 60% 95%, var(--accent-2), transparent 62%);
+      filter: saturate(108%);
+    }
+    html[data-theme="dark"] .bg {
+      background:
+        radial-gradient(900px 520px at 12% 6%, rgba(122,162,247,0.14), transparent 60%),
+        radial-gradient(760px 440px at 88% 18%, rgba(122,162,247,0.10), transparent 60%),
+        linear-gradient(180deg, rgba(26,31,43,0.60), rgba(11,14,20,0.94));
+    }
+
+    .grid {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(214,222,232,0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(214,222,232,0.18) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.22;
+      mix-blend-mode: multiply;
+    }
+    html[data-theme="dark"] .grid {
+      background-image:
+        linear-gradient(to right, rgba(230,232,235,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(230,232,235,0.06) 1px, transparent 1px);
+      opacity: 0.28;
+      mix-blend-mode: normal;
+    }
+
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Nav (same language as other pages) */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--divider);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; padding: 14px 0;
+    }
+    .brand {
+      display: flex; align-items: baseline; gap: 10px;
+      text-decoration: none; color: var(--text); white-space: nowrap;
+    }
+    .brand-mark {
+      width: 10px; height: 10px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent);
+      transform: translateY(-1px);
+    }
+    .brand-name { font-family: var(--serif); font-weight: 700; font-size: 16.5px; letter-spacing: -0.02em; }
+    .brand-sub { font-size: 12.5px; color: var(--muted2); font-weight: 500; }
+
+    .nav-links { display: flex; align-items: center; gap: 10px; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted);
+      font-weight: 600; font-size: 13.5px;
+      padding: 9px 10px; border-radius: 10px;
+      transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+    .nav-links a:hover { background: var(--accent-2); color: var(--text); transform: translateY(-1px); }
+
+    .nav-actions { display: flex; align-items: center; gap: 10px; }
+    .btn {
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 72%, transparent);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-weight: 650;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 36%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 44%, var(--panel));
+    }
+    .btn.primary {
+      border-color: color-mix(in srgb, var(--accent) 60%, var(--divider));
+      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+    }
+    .icon-btn {
+      width: 42px; height: 42px;
+      display: inline-grid; place-items: center;
+      border-radius: 14px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel) 76%, transparent);
+      cursor: pointer;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+    .icon-btn:hover {
+      transform: translateY(-1px);
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 52%, var(--panel));
+    }
+    .hamburger { display: none; }
+
+    .mobile-panel {
+      display: none;
+      border-top: 1px solid var(--divider);
+      padding: 10px 0 14px;
+    }
+    .mobile-panel a {
+      display: block;
+      padding: 12px 10px;
+      margin: 4px 0;
+      border-radius: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 650;
+      border: 1px solid transparent;
+    }
+    .mobile-panel a:hover {
+      border-color: var(--divider);
+      background: var(--accent-2);
+      color: var(--text);
+    }
+
+    /* Page header */
+    main { padding: 28px 0 56px; }
+    .page-head {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+    .page-head:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(650px 360px at 20% 20%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 62%),
+        radial-gradient(520px 320px at 92% 40%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 65%);
+      z-index: -1;
+      opacity: 0.9;
+    }
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 76%, transparent);
+      color: var(--muted);
+      font-weight: 750;
+      font-size: 13px;
+    }
+    .k-dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent);
+    }
+    h1 {
+      margin: 14px 0 8px;
+      font-family: var(--serif);
+      letter-spacing: -0.03em;
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.12;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.65;
+      max-width: 86ch;
+    }
+
+    /* Controls */
+    .controls {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .control-left {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      border-radius: 14px;
+      padding: 10px 12px;
+      min-width: min(520px, 100%);
+    }
+    .search svg { color: var(--muted2); }
+    .search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 13.5px;
+      width: 100%;
+      font-weight: 600;
+    }
+    .toggle {
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      cursor: pointer;
+      font-weight: 750;
+      font-size: 13px;
+      color: var(--text);
+    }
+    .toggle small { color: var(--muted2); font-weight: 650; }
+    .switch {
+      width: 42px; height: 24px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: transparent;
+      position: relative;
+      flex: 0 0 auto;
+    }
+    .switch::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 3px;
+      width: 18px; height: 18px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 20%, transparent);
+      transition: left 180ms ease;
+    }
+    .toggle[data-on="true"] .switch::after { left: 21px; }
+
+    /* Cards grid */
+    .toc {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--divider);
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      box-shadow: var(--shadow2);
+      transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
+      position: relative;
+      overflow: hidden;
+      min-height: 168px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: color-mix(in srgb, var(--accent) 34%, var(--divider));
+      background: color-mix(in srgb, var(--accent-2) 30%, var(--panel));
+    }
+    .card:before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background:
+        radial-gradient(520px 280px at 18% 18%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 62%);
+      opacity: 0.75;
+      z-index: -1;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .part {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      color: var(--muted2);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--divider);
+      background: color-mix(in srgb, var(--panel-solid) 72%, transparent);
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .badge.core {
+      border-color: color-mix(in srgb, var(--accent) 55%, var(--divider));
+      background: color-mix(in srgb, var(--accent) 10%, var(--panel));
+    }
+
+    .title {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+      line-height: 1.28;
+      font-weight: 750;
+      color: var(--text);
+    }
+
+    .summary {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .open {
+      margin-top: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 13.5px;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+      width: fit-content;
+    }
+    .open:hover {
+      border-bottom-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    }
+
+    /* Core filtering */
+    .is-hidden { display: none !important; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--divider);
+      margin-top: 24px;
+      padding: 22px 0;
+      color: var(--muted2);
+      font-size: 13px;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted2);
+      text-decoration: none;
+      margin-right: 12px;
+      font-weight: 650;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    @media (max-width: 980px) {
+      .toc { grid-template-columns: repeat(2, 1fr); }
+      .search { min-width: 100%; }
+      .controls { gap: 12px; }
+    }
+    @media (max-width: 640px) {
+      .toc { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .hamburger { display: inline-grid; }
+      .mobile-panel { display: none; }
+      .mobile-panel.open { display: block; }
+      .brand-sub { display: none; }
+      main { padding-top: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true"></div>
+  <div class="grid" aria-hidden="true"></div>
+
+  <!-- NAV -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="index.html" aria-label="BOS Lite Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">BOS Lite</span>
+        <span class="brand-sub">Reality-Anchored Decision Framework</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="guide-cover.html">Guide</a>
+        <a href="toc.html" aria-current="page">TOC</a>
+        <a href="tool/bos-lite-runner.html">Tool</a>
+        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn hamburger" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3 5.5H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 10H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M3 14.5H17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </button>
+
+        <a class="btn" href="guide-cover.html">Back to Cover</a>
+        <button class="icon-btn" id="themeBtn" aria-label="Toggle dark mode">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M21 13.2A8.2 8.2 0 1 1 10.8 3a6.6 6.6 0 0 0 10.2 10.2Z"
+                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="mobile-panel" id="mobilePanel" aria-label="Mobile Navigation">
+        <a href="index.html">Home</a>
+        <a href="guide-cover.html">Guide Cover</a>
+        <a href="toc.html" aria-current="page">Table of Contents</a>
+        <a href="tool/bos-lite-runner.html">Tool</a>
+        <a href="safeguards/what-bos-does-not-work-for.html">Safeguards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- PAGE HEADER -->
+    <section class="page-head" aria-label="Table of Contents header">
+      <span class="kicker"><span class="k-dot" aria-hidden="true"></span> BOS Lite • Table of Contents</span>
+      <h1>22 Parts — Read like a magazine. Use like a tool.</h1>
+      <p class="lead">
+        Each chapter is written to reduce confident self-deception by forcing reality contact.
+        The <strong>Core Modules</strong> are the chapters where most people try to cheat the system — and BOS Lite refuses to let them.
+      </p>
+
+      <div class="controls" aria-label="TOC controls">
+        <div class="control-left">
+          <div class="search" role="search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M16.8 16.8 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+            <input id="searchInput" type="search" placeholder="Search chapters by keyword (e.g., rejection, silence, leverage)..." aria-label="Search chapters" />
+          </div>
+
+          <div class="toggle" id="coreToggle" data-on="false" role="button" tabindex="0" aria-label="Toggle Core Modules filter">
+            <span class="switch" aria-hidden="true"></span>
+            Core Modules
+            <small>(only)</small>
+          </div>
+        </div>
+
+        <div class="control-right">
+          <a class="btn primary" href="bos-lite/part-01.html">Start at Part 1 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOC GRID -->
+    <section class="toc" id="tocGrid" aria-label="Table of Contents list">
+
+      <!-- Part 01 -->
+      <article class="card" data-part="1" data-core="false" data-title="(Intro) Why This Exists, and Why It’s Called BOS">
+        <div class="row">
+          <div class="part">Part 01</div>
+        </div>
+        <h3 class="title">(Intro) Why This Exists, and Why It’s Called BOS</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-01.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 02 -->
+      <article class="card" data-part="2" data-core="false" data-title="What This System Actually Is (and Why Most People Misunderstand That)">
+        <div class="row">
+          <div class="part">Part 02</div>
+        </div>
+        <h3 class="title">What This System Actually Is (and Why Most People Misunderstand That)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-02.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 03 -->
+      <article class="card" data-part="3" data-core="false" data-title="How BOS Lite Actually Works in Real Life">
+        <div class="row">
+          <div class="part">Part 03</div>
+        </div>
+        <h3 class="title">How BOS Lite Actually Works in Real Life</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-03.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 04 -->
+      <article class="card" data-part="4" data-core="false" data-title="What Leverage Really Means (And Why Most People Don’t Have It)">
+        <div class="row">
+          <div class="part">Part 04</div>
+        </div>
+        <h3 class="title">What Leverage Really Means (And Why Most People Don’t Have It)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-04.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 05 -->
+      <article class="card" data-part="5" data-core="false" data-title="Why BOS Lite Refuses to Motivate You (And Why That’s a Relief)">
+        <div class="row">
+          <div class="part">Part 05</div>
+        </div>
+        <h3 class="title">Why BOS Lite Refuses to Motivate You (And Why That’s a Relief)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-05.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 06 -->
+      <article class="card" data-part="6" data-core="false" data-title="Discomfort, Rejection, and Why BOS Lite Treats Them as Signals, Not Threats">
+        <div class="row">
+          <div class="part">Part 06</div>
+        </div>
+        <h3 class="title">Discomfort, Rejection, and Why BOS Lite Treats Them as Signals, Not Threats</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-06.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 07 -->
+      <article class="card" data-part="7" data-core="false" data-title="Why BOS Lite Is Intentionally Simple (and Why Complexity Keeps People Stuck)">
+        <div class="row">
+          <div class="part">Part 07</div>
+        </div>
+        <h3 class="title">Why BOS Lite Is Intentionally Simple (and Why Complexity Keeps People Stuck)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-07.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 08 -->
+      <article class="card" data-part="8" data-core="false" data-title="Why It’s Called the “Billionaire Operating System” (and Why That Name Is Not What You Think)">
+        <div class="row">
+          <div class="part">Part 08</div>
+        </div>
+        <h3 class="title">Why It’s Called the “Billionaire Operating System” (and Why That Name Is Not What You Think)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-08.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 09 -->
+      <article class="card" data-part="9" data-core="false" data-title="Why Discomfort Shows Up (and What It Actually Means)">
+        <div class="row">
+          <div class="part">Part 09</div>
+        </div>
+        <h3 class="title">Why Discomfort Shows Up (and What It Actually Means)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-09.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 10 (CORE) -->
+      <article class="card" data-part="10" data-core="true" data-title="How People Try to Game the System (and Why BOS Lite Exposes It)">
+        <div class="row">
+          <div class="part">Part 10</div>
+          <div class="badge core">Core</div>
+        </div>
+        <h3 class="title">How People Try to Game the System (and Why BOS Lite Exposes It)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-10.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 11 -->
+      <article class="card" data-part="11" data-core="false" data-title="Failure, Rejection, and Silence (and Why BOS Lite Treats Them Differently)">
+        <div class="row">
+          <div class="part">Part 11</div>
+        </div>
+        <h3 class="title">Failure, Rejection, and Silence (and Why BOS Lite Treats Them Differently)</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-11.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 12 (CORE) -->
+      <article class="card" data-part="12" data-core="true" data-title="Overthinking, Hesitation, and the Trap of “Almost Doing”">
+        <div class="row">
+          <div class="part">Part 12</div>
+          <div class="badge core">Core</div>
+        </div>
+        <h3 class="title">Overthinking, Hesitation, and the Trap of “Almost Doing”</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-12.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 13 -->
+      <article class="card" data-part="13" data-core="false" data-title="Time, Patience, and Learning Without Waiting Forever">
+        <div class="row">
+          <div class="part">Part 13</div>
+        </div>
+        <h3 class="title">Time, Patience, and Learning Without Waiting Forever</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-13.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 14 (CORE) -->
+      <article class="card" data-part="14" data-core="true" data-title="Rejection, Silence, and Disappointment as Information">
+        <div class="row">
+          <div class="part">Part 14</div>
+          <div class="badge core">Core</div>
+        </div>
+        <h3 class="title">Rejection, Silence, and Disappointment as Information</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-14.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 15 -->
+      <article class="card" data-part="15" data-core="false" data-title="Effort, Worth, and the Trap of Self-Punishment">
+        <div class="row">
+          <div class="part">Part 15</div>
+        </div>
+        <h3 class="title">Effort, Worth, and the Trap of Self-Punishment</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-15.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 16 -->
+      <article class="card" data-part="16" data-core="false" data-title="Recovery, Pacing, and the Difference Between Stopping and Quitting">
+        <div class="row">
+          <div class="part">Part 16</div>
+        </div>
+        <h3 class="title">Recovery, Pacing, and the Difference Between Stopping and Quitting</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-16.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 17 -->
+      <article class="card" data-part="17" data-core="false" data-title="Silence, Indifference, and the Feedback Most People Avoid">
+        <div class="row">
+          <div class="part">Part 17</div>
+        </div>
+        <h3 class="title">Silence, Indifference, and the Feedback Most People Avoid</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-17.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 18 (CORE) -->
+      <article class="card" data-part="18" data-core="true" data-title="Rejection as Information, Not Identity">
+        <div class="row">
+          <div class="part">Part 18</div>
+          <div class="badge core">Core</div>
+        </div>
+        <h3 class="title">Rejection as Information, Not Identity</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-18.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 19 (CORE) -->
+      <article class="card" data-part="19" data-core="true" data-title="Consistency, Momentum, and the Trap of Repetition">
+        <div class="row">
+          <div class="part">Part 19</div>
+          <div class="badge core">Core</div>
+        </div>
+        <h3 class="title">Consistency, Momentum, and the Trap of Repetition</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-19.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 20 -->
+      <article class="card" data-part="20" data-core="false" data-title="Letting Go Without Self-Blame">
+        <div class="row">
+          <div class="part">Part 20</div>
+        </div>
+        <h3 class="title">Letting Go Without Self-Blame</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-20.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 21 -->
+      <article class="card" data-part="21" data-core="false" data-title="Rebuilding Self-Trust Without Blind Confidence">
+        <div class="row">
+          <div class="part">Part 21</div>
+        </div>
+        <h3 class="title">Rebuilding Self-Trust Without Blind Confidence</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-21.html">Open Chapter →</a>
+      </article>
+
+      <!-- Part 22 -->
+      <article class="card" data-part="22" data-core="false" data-title="(Final) What BOS Lite Ultimately Gives You">
+        <div class="row">
+          <div class="part">Part 22</div>
+        </div>
+        <h3 class="title">(Final) What BOS Lite Ultimately Gives You</h3>
+        <p class="summary">Summary coming soon. (This will become 1–2 sentences.)</p>
+        <a class="open" href="bos-lite/part-22.html">Open Chapter →</a>
+      </article>
+
+    </section>
+
+    <footer>
+      <div class="wrap footer-row">
+        <div>© <span id="year"></span> BOS Lite • Reference-Only</div>
+        <div class="footer-links">
+          <a href="safeguards/disclaimer.html">Disclaimer</a>
+          <a href="safeguards/terms-of-use.html">Terms</a>
+          <a href="safeguards/data-deletion.html">Data Deletion</a>
+          <a href="safeguards/legal-notice.html">Legal Notice</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('themeBtn');
+      const menuBtn = document.getElementById('menuBtn');
+      const mobilePanel = document.getElementById('mobilePanel');
+      const year = document.getElementById('year');
+
+      const searchInput = document.getElementById('searchInput');
+      const coreToggle = document.getElementById('coreToggle');
+      const cards = Array.from(document.querySelectorAll('.card'));
+
+      year.textContent = new Date().getFullYear();
+
+      // Theme
+      const stored = localStorage.getItem('bos_theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initial = stored || (prefersDark ? 'dark' : 'light');
+      setTheme(initial);
+
+      themeBtn?.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(next);
+      });
+
+      function setTheme(mode) {
+        if (mode === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        localStorage.setItem('bos_theme', mode);
+      }
+
+      // Mobile menu
+      menuBtn?.addEventListener('click', () => {
+        const isOpen = mobilePanel.classList.toggle('open');
+        menuBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      // Core toggle
+      function toggleCore(on) {
+        coreToggle.dataset.on = String(on);
+        applyFilters();
+      }
+
+      coreToggle?.addEventListener('click', () => {
+        toggleCore(coreToggle.dataset.on !== 'true');
+      });
+
+      coreToggle?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleCore(coreToggle.dataset.on !== 'true');
+        }
+      });
+
+      // Search + filter
+      function applyFilters() {
+        const q = (searchInput.value || "").trim().toLowerCase();
+        const coreOnly = coreToggle.dataset.on === 'true';
+
+        cards.forEach(card => {
+          const title = (card.getAttribute('data-title') || "").toLowerCase();
+          const isCore = card.getAttribute('data-core') === 'true';
+
+          const matchesQuery = !q || title.includes(q);
+          const matchesCore = !coreOnly || isCore;
+
+          card.classList.toggle('is-hidden', !(matchesQuery && matchesCore));
+        });
+      }
+
+      searchInput?.addEventListener('input', applyFilters);
+
+      // Start with filters applied (in case of autofill)
+      applyFilters();
+    })();
+  </script>
+</body>
+</html>
